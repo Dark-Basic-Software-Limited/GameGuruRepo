@@ -263,7 +263,8 @@ function gameplayercontrol.weaponfire()
 		end
 
 		-- Underwater weapons fire
-		if ( GetFireModeSettingsNoSubmergedFire() == 1 and GetGamePlayerStateUnderwater() == 1 ) then 
+		--if gun doesnt allow firing weapon under water ignore also prevent 3rd person from using weapons while underwater
+		if ( GetFireModeSettingsNoSubmergedFire() == 1 and GetGamePlayerStateUnderwater() == 1 ) or ( GetPlrObjectPositionY() <= GetGamePlayerStateWaterlineY() )  then 
 			SetGamePlayerStateFiringMode(0)
 		end
 		if ( (bit32.band(g_MouseClickControl,2)) == 2 and GetFireModeSettingsActionBlockStart() ~= 0 and GetGamePlayerStateBlockingAction() == 0 and GetGamePlayerStateIsMelee() == 0 ) then 
