@@ -339,6 +339,16 @@ function PromptLocalForVR(e,str,vrmode)
  SendMessageS("promptlocalforvr",e,str);
 end
 
+function GetFileExists(filename)
+    local file = io.open(filename, "r")
+    if file then
+        file:close()
+        return 1
+    else
+        return 0
+    end
+end
+
 function SetFogNearest(v)
  SendMessageF("setfognearest",v)
 end
@@ -632,6 +642,9 @@ function Collected(e)
 end
 function MoveUp(e,v)
  SendMessageF("moveup",e,v);
+end
+function MoveDown( e, v )
+MoveUp( e, -v )
 end
 function MoveForward(e,v)
  SendMessageF("moveforward",e,v);
@@ -1137,11 +1150,11 @@ ResetWeaponSystems: ResetWeaponSystems ( ) -- resets any projectiles currently a
 
 SetWeaponSlot: SetWeaponSlot ( index, got flag, preference flag ) -- Sets the weapon data directly, index is 1 through 10. The got flag value is the weapon ID of the weapon you have in that slot. By setting it, you can effectively grant the player that weapon without them having to pick it up, but you should ensure that weapon is placed somewhere in the level so it can load it the particulars.  The preference flag value also takes a Weapon ID and is used when you want to make sure when a weapon is collected, it will go to that slot, so  SetWeaponSlot ( 9, 0, 12 ) will make sure that when you collect Weapon ID 12 it will automatically be assigned to slot 9.
 
-GetWeaponAmmo: quantity = GetWeaponAmmo ( index ) -- Sets the weapon data directly, index is 1 through 10
+GetWeaponAmmo: quantity = GetWeaponAmmo ( index ) -- Gets the weapon data directly, index is 1 through 10
 SetWeaponAmmo: SetWeaponAmmo ( index, ammo quantity ) -- Sets the weapon data directly, index is 1 through 10
-GetWeaponClipAmmo: quantity = GetWeaponClipAmmo ( index ) -- Sets the weapon data directly, index is 1 through 10
+GetWeaponClipAmmo: quantity = GetWeaponClipAmmo ( index ) -- Gets the weapon data directly, index is 1 through 10
 SetWeaponClipAmmo: SetWeaponClipAmmo ( index, clip quantity ) -- Sets the weapon data directly, index is 1 through 10
-GetWeaponPoolAmmo: quantity = GetWeaponPoolAmmo ( index ) -- Sets the weapon data directly, index is 1 through 10
+GetWeaponPoolAmmo: quantity = GetWeaponPoolAmmo ( index ) -- Gets the weapon data directly, index is 1 through 10
 SetWeaponPoolAmmo: SetWeaponPoolAmmo ( index, pool ammo quantity ) -- Sets the weapon data directly, index is 1 through 10
 GetWeaponSlot: GetWeaponSlot ( index ) -- Gets WeaponID from slot, index is 1 through 10
 GetPlayerWeaponID: WeaponID = GetPlayerWeaponID ( ) -- Returns the WeaponID the player is currently carrying
@@ -1783,6 +1796,8 @@ SetGamePlayerStateImmunity: SetGamePlayerStateImmunity() -- command used by the 
 GetGamePlayerStateImmunity: GetGamePlayerStateImmunity() -- command used by the default player control mechanism
 SetGamePlayerStateCharAnimIndex: SetGamePlayerStateCharAnimIndex() -- command used by the default player control mechanism
 GetGamePlayerStateCharAnimIndex: GetGamePlayerStateCharAnimIndex() -- command used by the default player control mechanism
+
+GetGamePlayerStatePlrLogic: GetGamePlayerStatePlrLogic() -- returns state of the player logic (FreezePlayer sets this to zero)
 
 SetGamePlayerStateIsMelee: SetGamePlayerStateIsMelee() -- by default sets current weapon, can specify optional gunid and firemode
 GetGamePlayerStateIsMelee: GetGamePlayerStateIsMelee() -- command used by the default player control mechanism

@@ -1,0 +1,41 @@
+;header
+desc          = Jet Pack Military Fuel Tank
+
+;Identity Details
+
+isimmobile    = 0
+phyweight = 100
+phyfriction = 100
+
+;ai
+aimain	      = jetpackfuel.lua
+
+;visualinfo
+textured      = Jet Pack Military_D.dds
+effect        = effectbank\reloaded\entity_basic.fx
+
+;orientation
+model         = jetpack_fuel.x
+offx          = 0
+offy          = 0
+offz          = 0
+rotx          = 0
+roty          = 0
+rotz          = 0
+defaultstatic = 0
+materialindex = 2
+
+;Sound
+soundset      = audiobank\misc\ammo.wav
+
+;statistics
+strength      = 5
+explodable    = 1
+explodedamage    = 50
+debrisshape   = 3
+
+;spawn
+spawnmax      = 0
+spawndelay    = 0
+spawnqty      = 0
+

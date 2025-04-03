@@ -3,8 +3,6 @@
 local nonDebrisName = "exp1" -- reserve exp1 just for non-debris entities such as GG standard barrels. all they should name as exp1
 -- and being treated as your original script stated. The debris ones should be treated a bit different since they are animated; we don't want them disappearing suddenly,as example. In fact we don't want them being hidden or destroyed, we want they generating debris, and these debris following the physisc and gravity laws while fallen to the ground.
 
-local preventExplosion = 1
-
 local U  = require "scriptbank\\utillib"
 local P  = require "scriptbank\\physlib"
 local min = math.min
@@ -272,42 +270,28 @@ function graphix_explosion_main(e)
 	
 	-- put all those lovely images to use
 	local emitter = emitterList[e]
-	if preventExplosion == 0 then
-		if emitter == nil then
-			emitterList[e] = { used      = false,
-							   boomImg   = ParticlesLoadImage( image_List[ explosion_name[e] ].path, 
-															  image_List[ explosion_name[e] ].imageNum ),
-							   emitNam   = image_List[ explosion_name[e] ].emitName,
-							   imploder  = image_List[ explosion_name[e] ].imploder,
-							   imgFrames = image_List[ explosion_name[e] ].imgFrames
-							 }
-			return
-		end
+
+	if emitter == nil then
+		emitterList[e] = { used      = false,
+		                   boomImg   = ParticlesLoadImage( image_List[ explosion_name[e] ].path, 
+						                                  image_List[ explosion_name[e] ].imageNum ),
+                           emitNam   = image_List[ explosion_name[e] ].emitName,
+                           imploder  = image_List[ explosion_name[e] ].imploder,
+						   imgFrames = image_List[ explosion_name[e] ].imgFrames
+						 }
+		return
+	end
 	
-		-- only use an emiiter if need to
-		if not emitter.used then 						
-			emitter.blowup = PE_CreateNamedEmitter( emitter.emitNam, emitter.boomImg, emitter.imgFrames, e)								
-			emitter.used = true
-			ParticlesSetLife( emitter.blowup, 10, 2000, 2000, 0 , 0 )
-			return
-		end
-		
-	else
-	
-		if emitter == nil then
-			emitterList[e] = { used = false }
-			emitterList[e].timer = nil
-			return
-		end
-	
+	-- only use an emiiter if need to
+	if not emitter.used then 						
+		emitter.blowup = PE_CreateNamedEmitter( emitter.emitNam, emitter.boomImg, emitter.imgFrames, e)								
+		emitter.used = true
+		ParticlesSetLife( emitter.blowup, 10, 2000, 2000, 0 , 0 )
+		return
 	end
 		
 	if emitter.timer == nil then
-	
-		if preventExplosion == 0 then	
-			ParticlesSetLife( emitter.blowup, 10, 2000, 2000, 1, 0 )
-		end
-		
+		ParticlesSetLife( emitter.blowup, 10, 2000, 2000, 1, 0 )
 		emitter.timer = g_Time + 100
 		
 		-- 1.5 second delay to allow particle to fire
@@ -321,28 +305,21 @@ function graphix_explosion_main(e)
 			Hide( e ) 
 		else
 			PlayAnimation(e,0)			
-			SetAnimationSpeed(e,10)
 		end
 	----------------------------------------------------------------------	
 			
-		if preventExplosion == 0 then	
-			for _, v in pairs( U.ClosestEntities( blastRadius, 100, Ent.x, Ent.z) ) do
-				if v ~= e then
-					processExplosion( v, Ent.x, Ent.y, Ent.z, emitter.imploder )
-				end
-			end 
-		end
+		for _, v in pairs( U.ClosestEntities( blastRadius, 100, Ent.x, Ent.z) ) do
+			if v ~= e then
+				processExplosion( v, Ent.x, Ent.y, Ent.z, emitter.imploder )
+			end
+		end 
 		
 	elseif 
 	
 		-- run emitter effect
 	   g_Time > emitter.timer then
-	   
-		if preventExplosion == 0 then	
-			ParticlesSetLife( emitter.blowup, 10, 2000, 2000, 0 , 0 )
-		end
+		ParticlesSetLife( emitter.blowup, 10, 2000, 2000, 0 , 0 )
 		emitter.timer = math.huge
-		
 		-- assign damage to player if in range of blast	
 		if U.PlayerCloserThanPos( Ent.x, Ent.y, Ent.z, blastRadius ) then
 			--AmenMoses funky math stuff i wont pretend to know what it is
@@ -369,24 +346,20 @@ function graphix_explosion_main(e)
 		end
 				
 	else
-	
 		-- delete the emitter then destroy the entity
 		if GetTimer( e ) > 1500 and GetAnimationFrame(e) == GetEntityAnimationFinish ( e, 0 ) then -- forcing engine to wait to the last anim frame before exit.
-
 			--StopAnimation(e,0)
-			if preventExplosion == 0 then	
-				ParticlesDeleteEmitter( emitter.blowup )
-			end
+			ParticlesDeleteEmitter( emitter.blowup )
 			-- Destroy( e )
 
-	--------------------------------------------------------------- mod by me			
-			if explosion_name[e] == nonDebrisName then -- if standard ones
-				Destroy( e ) 
-			else
-				PlayAnimation(e,0)
-				CollisionOn(e)			
-			end	
-	---------------------------------------------------------------------------
+--------------------------------------------------------------- mod by me			
+		if explosion_name[e] == nonDebrisName then -- if standard ones
+			Destroy( e ) 
+		else
+			PlayAnimation(e,0)
+			CollisionOn(e)			
+		end	
+---------------------------------------------------------------------------
 		
 		end
 		

@@ -551,6 +551,9 @@ function gameplayercontrol.lookmove()
 		if ( g_PlayerHealth == 0 or GetGamePlayerStatePlrHasFocus() == 0 or (GetGamePlayerStateGameRunAsMultiplayer() == 1 and GetGamePlayerStateSteamWorksRespawnLeft() ~= 0) ) then 
 			tcleardeltas = MouseMoveX() + MouseMoveY()
 		end
+		if GetGamePlayerStatePlrLogic() == 0 then
+			tcleardeltas = MouseMoveX() + MouseMoveY()
+		end
 		-- Tab Mode 2, low FPS screen and construction kit menus require mouse
 		if ( GetGamePlayerStateTabMode()<2 and GetGamePlayerStateLowFpsWarning() ~= 1 ) then 
 			-- Manipulate camera angle using mouselook
