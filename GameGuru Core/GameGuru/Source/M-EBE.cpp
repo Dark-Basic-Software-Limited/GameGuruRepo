@@ -3218,6 +3218,11 @@ int ebe_save ( int iEntityIndex )
 		SetDir(pOldDir);
 		return 0;
 	}
+	if ( tSaveFile == "" )
+	{
+		SetDir(pOldDir);
+		return 0;
+	}
 
 	// LEE:100325 - Ensure EBE file ALWAYS has the .ebe extension
 	if (Right(tSaveFile.Get(), 4) != ".ebe")
