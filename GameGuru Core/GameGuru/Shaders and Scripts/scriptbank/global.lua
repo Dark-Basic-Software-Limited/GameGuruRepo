@@ -96,6 +96,12 @@ g_MouseClick = 0
 g_EntityElementMax = 0
 g_PlayerUnderwaterMode = 0
 
+-- Playable Map Size
+g_mapsizeminx = 100
+g_mapsizemaxx = 51100
+g_mapsizeminz = 100
+g_mapsizemaxz = 51100
+
 -- Checkpoint and soundloop states
 g_CheckpointX = 0
 g_CheckpointY = 0
