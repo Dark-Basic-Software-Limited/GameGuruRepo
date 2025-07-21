@@ -1411,6 +1411,37 @@ luaMessage** ppLuaMessages = NULL;
 	 return 1;
  }
 
+ int GetLimbPosAng(lua_State* L)
+ {
+	 lua = L;
+	 int n = lua_gettop(L);
+	 if (n < 2) return 0;
+	 int iID = lua_tonumber(L, 1);
+	 int iLimbID = lua_tonumber(L, 2);
+	 if (!ConfirmObjectAndLimb(iID, iLimbID)) return 0;
+
+	 // actual or instanced
+	 sObject* pObject = g_ObjectList[iID];
+	 sObject* pActualObject = pObject;
+	 if (pObject->pInstanceOfObject)
+		 pActualObject = pObject->pInstanceOfObject;
+
+	 // get frame of object
+	 sFrame* pFrame = pActualObject->ppFrameList[iLimbID];
+	 if (pObject->pInstanceOfObject) pFrame->bVectorsCalculated = false;
+
+	 // specific limb/frame information
+	 UpdateRealtimeFrameVectors(pObject, pFrame);
+
+	 lua_pushnumber(L, pFrame->vecPosition.x);
+	 lua_pushnumber(L, pFrame->vecPosition.y);
+	 lua_pushnumber(L, pFrame->vecPosition.z);
+	 lua_pushnumber(L, pFrame->vecDirection.x);
+	 lua_pushnumber(L, pFrame->vecDirection.y);
+	 lua_pushnumber(L, pFrame->vecDirection.z);
+
+	 return 6;
+ }
  // Entity Animation
  int SetEntityAnimation(lua_State *L)
  {
@@ -7044,6 +7075,7 @@ void addFunctions()
 	lua_register(lua, "GetEntityString", GetEntityString);
 
 	lua_register(lua, "GetLimbName", GetLimbName);
+	lua_register(lua, "GetLimbPosAng", GetLimbPosAng);
 
 	lua_register(lua, "SetEntitySpawnAtStart", SetEntitySpawnAtStart);
 	lua_register(lua, "GetEntitySpawnAtStart", GetEntitySpawnAtStart);
