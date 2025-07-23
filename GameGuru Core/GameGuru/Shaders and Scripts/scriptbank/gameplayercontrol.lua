@@ -1,6 +1,7 @@
 -- GamePlayerControl module
 
 local gameplayercontrol = {}
+local allowplayertoleavemapterraineditablearea = 0
 
 g_gunandmeleemouseheld = 0
 g_meleekeynotfree = 0
@@ -896,10 +897,12 @@ function gameplayercontrol.control()
 	end
 
 	-- Prevent player leaving terrain area
-	if ( GetPlrObjectPositionX()<100 ) then SetGamePlayerControlPushangle(90.0) SetGamePlayerControlPushforce(1.0) end
-	if ( GetPlrObjectPositionX()>51100 ) then SetGamePlayerControlPushangle(270.0) SetGamePlayerControlPushforce(1.0) end
-	if ( GetPlrObjectPositionZ()<100 ) then SetGamePlayerControlPushangle(0.0) SetGamePlayerControlPushforce(1.0) end
-	if ( GetPlrObjectPositionZ()>51100 ) then SetGamePlayerControlPushangle(180.0) SetGamePlayerControlPushforce(1.0) end
+	if allowplayertoleavemapterraineditablearea == 0 then
+	if ( GetPlrObjectPositionX() < g_mapsizeminx ) then SetGamePlayerControlPushangle(90.0) SetGamePlayerControlPushforce(1.0) end
+	if ( GetPlrObjectPositionX() > g_mapsizemaxx ) then SetGamePlayerControlPushangle(270.0) SetGamePlayerControlPushforce(1.0) end
+	if ( GetPlrObjectPositionZ() < g_mapsizeminz ) then SetGamePlayerControlPushangle(0.0) SetGamePlayerControlPushforce(1.0) end
+	if ( GetPlrObjectPositionZ() > g_mapsizemaxz ) then SetGamePlayerControlPushangle(180.0) SetGamePlayerControlPushforce(1.0) end
+	end
 
 	-- Reduce any player push force over time
 	if ( GetGamePlayerControlPushforce()>0 ) then 
