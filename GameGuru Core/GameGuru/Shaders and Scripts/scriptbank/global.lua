@@ -1973,8 +1973,8 @@ GetObjectScales : xs, ys, zs = GetObjectScales( obj ) -- returns scale values of
 GetEntityWeight : weight = GetEntityWeight( e ) -- returns the Physics weight value of the entity
 
 ***** Collision box is defined by coordinates of two opposing corners, from these it is easy to calculate the size of the object
-GetObjectColBox : xmin, ymin, zmin, xmax, ymax, zmax = GetObjectColBox( obj ) -- returns collision cube of object
-GetEntityColBox : xmin, ymin, zmin, xmax, ymax, zmax = GetEntityColBox( e )   -- returns collision cube of entity
+GetObjectCollBox : xmin, ymin, zmin, xmax, ymax, zmax = GetObjectColBox( obj ) -- returns collision cube of object
+GetEntityCollBox : xmin, ymin, zmin, xmax, ymax, zmax = GetEntityColBox( e )   -- returns collision cube of entity. Example: local x1, y1, z1, x2, y2, z2 = GetEntityCollBox(e)
 
 ***** Lua control of dynamic light, you get the light number using entity e number then use that in the other light functions
 ***** for example; lightNum = GetEntityLightNumber( e )  then  x, y, z = GetLightPosition( lightNum )
