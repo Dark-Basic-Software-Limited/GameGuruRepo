@@ -1945,6 +1945,7 @@ AIEntityRemoveTarget: AIEntityRemoveTarget(obj,targetid) -- where obj is the obj
 AIEntityMoveToCover: AIEntityMoveToCover(obj,x,z) -- where obj is the object number of the entity. See DarkAI docs for parameter descriptions
 AIGetEntityCanFire: AIGetEntityCanFire(obj) -- where obj is the object number of the entity. See DarkAI docs for parameter descriptions
 
+***** VR and Headtracking
 GetHeadTracker : GetHeadTracker() -- returns a value of one if the head tracker is connected
 ResetHeadTracker : ResetHeadTracker() -- resets the tracker to signal device is facing forward
 GetHeadTrackerYaw : GetHeadTrackerYaw() - returns the yaw of the head tracker if attached
@@ -1959,6 +1960,7 @@ ScaleObject : ScaleObject( obj, x, y, z ) -- Scales object in all axis (Note: us
 SetSkyTo : SetSkyTo ( str ) -- where str is the folder name of the sky you want to change to
 
 SetLutTo : SetLutTo ( "str" ) -- where str is the name of the post process filter effect to change to ("none" is default / none)
+GetLut : GetLut() -- returns the name of the loaded LUT
 SetPostSaturation : SetPostSaturation ( v ) -- where v is the value between 0 and 100 for post process saturation (30 is default)
 GetPostSaturation : value = GetPostSaturation ( ) -- gets the saturation value currently used in the game
 SetPostSepia : SetPostSepia ( v ) -- where v is the value between 0 and 100 for post process sepia effect (0 is default / none)
@@ -2012,8 +2014,12 @@ GetWaterFlowSpeed() -- gets water setting attributes
 GetWaterDistortionWaves() -- gets water setting attributes
 GetRippleWaterSpeed() -- gets water setting attributes
 
+***** Entity Texture
 SetEntityHighlight(e,v) -- set an overlay colour on entity, v = 0(none/remove),1(red),2(pink),3(green),4(blue/green),5(gold)
-
+ChangeTexture(e,texturepath) -- Change the texture of the entity. For example: ChangeTexture(e,"entitybank\\Industrial\\Gas Tank_D.dds") OR ChangeTexture(e,"entitybank\\Industrial\\Gas Tank_D.dds",2) to include material index if multi texture object.
+PlayVideoOnEntity(e,videopath,v) -- entity e number, video file path, [optional] loopvideo = 1/0 
+StopVideoOnEntity(e) -- Stop video texture
+IsVideoOnEntityPlaying(e) -- Returns if video texture is playing on entity.
 
 ***** Dymanic sun commands.
 SetSunDirection(x,y,z) -- The direction will be multiplyid into a position so you can use ranges like -10 to 10 or similar.
@@ -2078,5 +2084,9 @@ EulerToQuat -- To be documented
 QuatMultiply -- To be documented
 QuatSLERP -- To be documented
 QuatLERP -- To be documented
+
+***** utility
+MsgBox("") -- Display pop-up "Lua Message" confirmation dialogue box. Do not run this on loop!
+Reset(Fade() -- To be documented
 
 --]]
