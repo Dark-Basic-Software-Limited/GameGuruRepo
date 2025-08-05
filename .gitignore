@@ -329,3 +329,7 @@ GameGuru Core/SDK/OGG/lib64/Release/vorbis_static.lib
 GameGuru Core/SDK/OGG/lib64/Release/vorbisfile_static.lib
 *.db-wal
 *.opendb
+GameGuru Core/.vs/GameGuru/v17/DocumentLayout.backup.json
+GameGuru Core/.vs/GameGuru/v17/DocumentLayout.json
+GameGuru Core/SDK/OGG/.vs/ogg_vorbis_static/v17/DocumentLayout.backup.json
+GameGuru Core/SDK/OGG/.vs/ogg_vorbis_static/v17/DocumentLayout.json
