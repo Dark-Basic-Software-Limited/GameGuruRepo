@@ -1,0 +1,30 @@
+;Entity Spec
+
+;Header
+desc          = Heal Zone
+
+;AI For Trigger
+aiinit	      = appear.lua
+aimain        = healingzone.lua
+aidestroy     = disappear.lua
+
+;AIUsed
+ifused        = 
+
+;Sound
+soundset      = 
+
+;Orientation
+model         = triggerzone.x
+defaultheight = 5
+textured      = triggerzone.dds
+scale         = 100
+fixnewy       = 0
+
+;Marker Extras
+ismarker      = 3
+markerindex   = 0
+isobjective   = 0
+
+;Trigger data
+stylecolor    = 4
